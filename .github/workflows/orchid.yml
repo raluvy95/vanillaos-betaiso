@@ -30,7 +30,12 @@ jobs:
     - name: Get current date
       run: echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> "$GITHUB_ENV"
 
-    - uses: actions/upload-artifact@v4
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
       with:
-        name: VanillaOS 2 Beta ${{ env.CURRENT_DATE }} ${{ github.run_number }}
-        path: builds/
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: builds/
+        asset_name: vanillaos orchid beta.iso
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "yes"
